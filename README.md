@@ -1,146 +1,62 @@
-# Sale Data Prediction Project
-Table of Contents
-Overview
-Features
-Requirements
-Installation
-Usage
-Jupyter Notebook
-Web AI Agent
-Database Setup
-File Structure
-Model Details
-Notes
-Contributing
-License
-Future Improvements
-Overview
-This project analyzes and predicts sales data using a dataset with 186,850 records, containing 6 columns: Order ID, Product, Quantity Ordered, Price Each, Order Date, and Purchase Address. The objectives include:
+# Overview
+This project focuses on analyzing and predicting sales data using a dataset containing information about orders. The dataset includes 186,850 records with 6 columns: Order ID, Product, Quantity Ordered, Price Each, Order Date, and Purchase Address. 
 
-Data Collection: Load and explore the sales dataset from Sales_data.ftr.
-Data Preparation: Clean data and handle missing values (e.g., 186,305 non-null entries).
-Prediction: Use a LightGBM model to predict future demand (e.g., 2020 predictions based on 2019 data).
-Visualization: Compare monthly demand trends for 2019 and 2020.
-Integration: Develop a Web AI Agent to convert natural language queries into SQL (NL2SQL) for real-time querying.
-The project is built with Python, utilizing libraries such as pandas, numpy, matplotlib, lightgbm, and integrates with a Flask-based web application.
+The main goals are:
+- Data Collection: Load and explore the sales dataset.
+- Data Preparation: Clean and preprocess the data for analysis.
+- Prediction: Use a LightGBM model to predict future sales demand (e.g., comparing 2019 actual data with 2020 predictions).
+- Visualization: Generate charts to compare monthly demand.
+The project is implemented using Python with libraries like pandas, numpy, matplotlib, and lightgbm.
 
-Features
-Load and inspect the sales dataset.
-Preprocess data and export to sales_data_for_mysql.csv for database integration.
-Visualize demand trends using Matplotlib.
-Train and save a LightGBM model (lightgbm_sales_model.joblib).
-Web AI Agent with NL2SQL functionality (e.g., "Show total revenue by month").
-Requirements
-Python: 3.12.4 (or compatible version)
-Required Libraries:
-pandas
-numpy
-matplotlib
-lightgbm
-joblib
-flask
-transformers (for NL2SQL)
-sqlite3 (or MySQL/PostgreSQL for database)
-Installation Command:
-bash
+# Features
+- Load and inspect the sales dataset from a Feather file (Sales_data.ftr).
+- Clean the data by handling missing values and preparing it for analysis.
+- Visualize monthly demand trends for 2019 and predicted demand for 2020.
+- Export the cleaned dataset to a CSV file (sales_data_for_mysql.csv) for further use (e.g., database integration).
+- Save the trained LightGBM model to a file (lightgbm_sales_model.joblib) for future predictions.
+  
+# Requirements
+- Python 3.12.4 (or compatible version)
+- Required libraries:
+  - **pandas**
+  - **numpy**
+  - **matplotlib**
+  - **lightgbm**
+  -**joblib**
+    
+## Install dependencies using:
+```bash
+pip install pandas numpy matplotlib lightgbm joblib
+```
+## Installation
+1. Clone the repository or download the project files.
+2. Ensure the dataset file Sales_data.ftr is placed in the Data/ directory.
+3. Install the required libraries as listed above.
+4. Run the Jupyter Notebook SaleData_Prediction.ipynb using Jupyter Notebook or JupyterLab.
 
-Thu gọn
+## Usage
+1. Open **SaleData_Prediction.ipynb** in Jupyter Notebook.
+2. Execute the cells in sequence to:
+- Load and explore the dataset.
+- Preprocess the data (e.g., handle missing values, convert data types if needed).
+- Generate the demand comparison chart for 2019 and 2020.
+- Export the data to **sales_data_for_mysql.csv**.
+- Save the trained model to **lightgbm_sales_model.joblib**.
+3. Review the output visualizations and saved files.
+  
+## File Structure
+- **SaleData_Prediction.ipynb**: Main Jupyter Notebook containing the code and analysis.
+- **Data/Sales_data.ftr**: Input dataset file (Feather format).
+- **sales_data_for_mysql.csv**: Exported cleaned dataset.
+- **lightgbm_sales_model.joblib**: Saved LightGBM model file.
+  
+## Notes
+- The dataset contains missing values (e.g., 186,305 non-null entries out of 186,850). Further cleaning may be required depending on the use case.
+- The prediction model (final_model) assumes prior training (not fully detailed in the provided snippet). Ensure the model is trained before saving.
+- The chart compares actual 2019 data with 2020 predictions, but the future_predictions_df is not fully defined in the snippet. Adjust the code if needed to match your data source.
+  
+## Contributing
+Feel free to fork this repository, make improvements (e.g., add data cleaning steps, enhance visualizations), and submit pull requests.
 
-Bọc lại
-
-Chạy
-
-Sao chép
-pip install pandas numpy matplotlib lightgbm joblib flask transformers sqlite3
-Installation
-Clone or download the project files:
-bash
-
-Thu gọn
-
-Bọc lại
-
-Chạy
-
-Sao chép
-git clone <repository-url>
-Place the dataset Sales_data.ftr in the Data/ directory.
-Install required libraries using the command above.
-Set up the database (see Database Setup).
-Run the Jupyter Notebook SaleData_Prediction.ipynb or the web app (app.py).
-Usage
-Jupyter Notebook
-Open SaleData_Prediction.ipynb in Jupyter Notebook or JupyterLab.
-Execute cells in sequence to:
-Load and explore the dataset.
-Preprocess data and generate the 2019-2020 demand chart.
-Export data to sales_data_for_mysql.csv.
-Save the trained model to lightgbm_sales_model.joblib.
-Review output visualizations and saved files.
-Web AI Agent
-Ensure the database is populated with sales_data_for_mysql.csv (see Database Setup).
-Run the Flask server:
-bash
-
-Thu gọn
-
-Bọc lại
-
-Chạy
-
-Sao chép
-python app.py
-Access the web app at http://localhost:5000.
-Log in with default credentials (admin@example.com / admin).
-Use the chat interface to enter queries (e.g., "Hiển thị tổng doanh thu tháng 12/2019").
-Database Setup
-SQLite (Default):
-Run python db_config.py to create sales.db with a sales table containing columns: Order_ID, Product, Quantity_Ordered, Price_Each, Order_Date, Purchase_Address.
-MySQL/PostgreSQL (Optional):
-Import sales_data_for_mysql.csv into your database.
-Update db_config.py with your connection string (e.g., MySQL: mysql+pymysql://user:password@localhost/db_name).
-Adjust table schema if needed to match your database engine.
-File Structure
-text
-
-Thu gọn
-
-Bọc lại
-
-Sao chép
-SaleData_Prediction/
-├── Data/
-│   └── Sales_data.ftr         # Input dataset
-├── sales_data_for_mysql.csv   # Exported cleaned data
-├── lightgbm_sales_model.joblib # Saved prediction model
-├── app.py                    # Flask backend for Web AI Agent
-├── db_config.py              # Database initialization
-├── nl2sql_model.py           # NL2SQL logic
-├── templates/
-│   ├── base.html            # Base template
-│   ├── chat.html            # Chat interface
-│   └── admin.html           # Admin panel
-├── static/
-│   ├── style.css            # CSS styles
-│   └── script.py            # Brython frontend logic
-└── SaleData_Prediction.ipynb # Main analysis notebook
-Model Details
-LightGBM Model: Trained on preprocessed data to predict Daily Demand. Saved as lightgbm_sales_model.joblib for reuse. Requires prior training with historical data (not fully detailed in the snippet).
-NL2SQL Model: Utilizes a pre-trained T5 model from Hugging Face, fine-tuned on sample queries (e.g., "Show total revenue by month" → SELECT SUM(Quantity_Ordered * Price_Each) FROM sales WHERE YEAR(Order_Date) = 2019 GROUP BY MONTH(Order_Date)). Fine-tuning with Vietnamese data is recommended for higher accuracy.
-Notes
-The dataset contains 545 missing rows. Handle these (e.g., drop or impute) based on your use case.
-The future_predictions_df for 2020 is not fully defined in the provided snippet. Ensure it’s generated before running the chart code.
-NL2SQL accuracy depends on fine-tuning. Provide a training dataset with Vietnamese query-SQL pairs.
-The web app uses Brython for frontend, which may have performance limitations with large datasets.
-Contributing
-Fork this repository and enhance features (e.g., add data cleaning, improve NL2SQL, integrate OpenAI).
-Submit pull requests with detailed descriptions of changes.
-License
-For educational purposes. Modify and use as needed.
-
-Future Improvements
-Fine-tune the NL2SQL model using SaleData_Prediction.ipynb data.
-Add real-time chart rendering with Matplotlib or Plotly in the web app.
-Support multiple languages (e.g., English, Vietnamese) for queries.
-Optimize database queries for large-scale data handling.
-Enhance security with user authentication and role-based access.
+## License
+This project is for educational purposes. No specific license is applied; modify and use as needed.
